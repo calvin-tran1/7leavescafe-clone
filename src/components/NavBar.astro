@@ -1,23 +1,43 @@
 ---
+import '@fontsource/poppins'
 ---
-<div class="navbar flex justify-center">
+<nav class="flex justify-center px-[100px] py-0 w-screen bg-slate-100">
     <div class="navbar-1">
-        <a href="/">home</a>
+        <a href="/">
+            <img 
+                width="200" 
+                height="108" 
+                src="https://7leavescafe.com/wp-content/uploads/2023/07/7-leaves-cafe-logo-red-transparent.png"
+                alt="7 leaves logo"
+                class="max-w-[120px]">
+        </a>
     </div>
     <div class="navbar-2">
-        <a class="px-5 py-[13px]" href="/rewards/">rewards</a>
-        <a class="px-5 py-[13px]" href="/fundraising/">fundraising</a>
-        <a class="px-5 py-[13px]" href="/career/">career</a>
+        <ul class="flex">
+            <li>
+                <a class="px-5 py-[13px] text-sm" href="/rewards/">rewards</a>
+            </li>
+            <li>
+                <a class="px-5 py-[13px] text-sm" href="/fundraising/">fundraising</a>
+            </li>
+            <li>
+                <a class="px-5 py-[13px] text-sm" href="/career/">career</a>
+            </li>
+        </ul>
     </div>
     <div class="navbar-3">
-        <a class="px-[26px] py-4" href="/locations/">locations</a>
+        <a class="px-[26px] py-4 text-sm" href="/locations/">find a store</a>
         <a class="px-[26px] py-4" href="/menu/">menu</a>
     </div>
-</div>
+</nav>
 
 <style>
     a {
-        font-family: roboto, sans-serif;
-        color: #beb9b0;
+        font-family: poppins, sans-serif;
+        color: #424242;
+        text-transform: uppercase;
+    }
+    ul {
+        list-style-type: none;
     }
 </style>
