@@ -1,7 +1,31 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from '../layouts/Layout.astro'
+import Carousel from '../components/Carousel.astro'
 ---
-<Layout title="7 Leaves Cafe - Be The Change">
-    
-</Layout>
 
+<Layout title="7 Leaves Cafe - Be The Change">
+  <div class="grid justify-items-stretch gap-4 text-center md:grid-cols-3">
+    <div class="bg-slate-500 md:col-span-3">
+      <h2>hero</h2>
+    </div>
+    <div class="bg-orange-300 md:col-span-1">coffee</div>
+    <div class="bg-orange-300 md:col-span-1">tea</div>
+    <div class="bg-orange-300 md:col-span-1">bites</div>
+    <div class="bg-green-500 md:col-span-3">our mission</div>
+    <div class="justify-self-center md:col-span-3">
+      <Carousel />
+    </div>
+    <div class="jusitfy-self-center grid-cols-2 md:col-span-3 md:grid">
+      <div class="bg-blue-100 p-4 md:col-span-1">mobile image</div>
+      <div class="bg-blue-100 p-4 md:col-span-1">
+        list of mobile app features
+      </div>
+      <div class="bg-teal-200 md:col-span-1">welcome home</div>
+      <div class="bg-teal-200 md:col-span-1">welcome home image</div>
+    </div>
+    <div class="bg-yellow-200 md:col-span-1">community</div>
+    <div class="bg-yellow-200 md:col-span-1">location</div>
+    <div class="bg-yellow-200 md:col-span-1">menu</div>
+    <div class="bg-purple-300 md:col-span-3">newsletter</div>
+  </div>
+</Layout>

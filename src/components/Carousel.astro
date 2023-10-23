@@ -1,0 +1,64 @@
+---
+
+---
+
+<div class="carousel">
+  <button class="carousel-button" id="prevButton">Previous</button>
+  <div class="carousel-item">Item 1</div>
+  <div class="carousel-item">Item 2</div>
+  <div class="carousel-item">Item 3</div>
+  <button class="carousel-button" id="nextButton">Next</button>
+</div>
+
+<script>
+  const carousel = document.querySelector('.carousel') as HTMLElement
+  const prevButton = document.querySelector('#prevButton') as HTMLButtonElement
+  const nextButton = document.querySelector('#nextButton') as HTMLButtonElement
+
+  let currentPosition = 0
+
+  // Event listener for the "Next" button
+  nextButton.addEventListener('click', () => {
+    currentPosition -= 1
+    updateCarousel()
+  })
+
+  // Event listener for the "Previous" button
+  prevButton.addEventListener('click', () => {
+    currentPosition += 1
+    updateCarousel()
+  })
+
+  function updateCarousel() {
+    const itemWidth = 120 // Adjust this to your item width
+    const maxPosition = (carousel.children.length - 3) * -itemWidth
+
+    if (currentPosition < maxPosition) {
+      currentPosition = 0
+    } else if (currentPosition > 0) {
+      currentPosition = maxPosition
+    }
+
+    carousel.style.transform = `translateX(${currentPosition * itemWidth}px)`
+  }
+</script>
+<style>
+  /* Define the styles for the carousel and buttons here */
+  .carousel {
+    display: flex;
+    overflow: hidden;
+    width: 300px;
+  }
+  .carousel-item {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    line-height: 100px;
+  }
+  .carousel-button {
+    cursor: pointer;
+  }
+</style>
