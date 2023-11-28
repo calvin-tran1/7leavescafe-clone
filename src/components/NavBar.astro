@@ -4,7 +4,9 @@ import { Image } from 'astro:assets'
 import sevenLeavesLogo from '../images/7-leaves-cafe-logo-red-transparent.png'
 ---
 
-<nav class="flex w-screen justify-center px-[100px] py-2">
+<nav
+  class="fixed top-0 z-50 flex w-screen justify-center bg-white px-[100px] py-2"
+>
   <div class="navbar-1 my-0 ml-0 mr-10 pl-4 align-middle">
     <a href="/">
       <Image
@@ -39,11 +41,13 @@ import sevenLeavesLogo from '../images/7-leaves-cafe-logo-red-transparent.png'
       >
         location_on</span
       >
-      <a class="py-4 pl-2 pr-[26px] text-sm" href="/locations/">Find a Store</a>
+      <a class="py-4 pl-2 pr-[26px] text-[15px]" href="/locations/"
+        >Find a Store</a
+      >
     </div>
     <div class="nav-menu-wrapper m-0 inline-block py-0 pl-0 pr-4 align-middle">
       <a
-        class="rounded-full bg-[#af1e26] px-[26px] py-[14px] text-[14px] text-white"
+        class="rounded-full bg-[#af1e26] px-[26px] py-[14px] text-[15px] text-white"
         href="/menu/">Our Menu</a
       >
     </div>
@@ -51,8 +55,14 @@ import sevenLeavesLogo from '../images/7-leaves-cafe-logo-red-transparent.png'
 </nav>
 
 <style>
+  @font-face {
+    font-family: 'SharpSansDispNo2-Semibold';
+    src: url('/fonts/SharpSansDispNo2-Semibold.ttf');
+    font-style: normal;
+    font-display: swap;
+  }
   a {
-    font-family: poppins, sans-serif;
+    font-family: 'SharpSansDispNo2-Semibold', sans-serif;
     color: #424242;
   }
 </style>
