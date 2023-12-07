@@ -46,8 +46,6 @@ import heroImage3 from '../images/Vietnamese-Coffee-Highlight-Drink.png'
       data-hero="2"
     >
       <div class="hero-background-overlay relative m-0 flex p-0">
-        <!-- <div class="absolute z-20 m-0 h-full w-full bg-white p-0 opacity-25">
-        </div> -->
         <Image
           src={heroImage2}
           alt="matcha hero image"
@@ -83,8 +81,6 @@ import heroImage3 from '../images/Vietnamese-Coffee-Highlight-Drink.png'
       <div class="hero-background-overlay relative m-0 flex p-0">
         <div class="w-1/2"></div>
         <div class="w-1/2">
-          <!-- <div class="absolute z-20 m-0 h-full w-full bg-white p-0 opacity-25">
-          </div> -->
           <Image
             src={heroImage3}
             alt="vietnamese coffee hero image"
@@ -112,61 +108,80 @@ import heroImage3 from '../images/Vietnamese-Coffee-Highlight-Drink.png'
       </div>
     </div>
   </div>
-  <div>
-    <button class="prev-button">Previous</button>
-    <button class="next-button">Next</button>
+  <div class="w-screen">
+    <button class="dot" data-carouselbutton="1"></button>
+    <button class="dot" data-carouselbutton="2"></button>
+    <button class="dot" data-carouselbutton="3"></button>
   </div>
 </div>
 
 <script>
   const carouselItems: NodeListOf<HTMLDivElement> =
     document.querySelectorAll('.carousel-item')
-  const prevButton = document.querySelector('.prev-button') as HTMLButtonElement
-  const nextButton = document.querySelector('.next-button') as HTMLButtonElement
+  const dotButtons: NodeListOf<HTMLButtonElement> = document.querySelectorAll(
+    '.dot'
+  ) as NodeListOf<HTMLButtonElement>
 
   let currentPosition = 1
+  let intervalId: number | null = null
 
-  nextButton.addEventListener('click', () => {
-    currentPosition += 1
-    updateCarousel()
+  dotButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+      const dotButtonNumberString: string | undefined =
+        button.dataset.carouselbutton
+      const dotButtonNumber: number = dotButtonNumberString
+        ? parseInt(dotButtonNumberString)
+        : 0
+
+      currentPosition = dotButtonNumber
+      updateCarousel()
+      resetTimer()
+    })
   })
 
-  prevButton.addEventListener('click', () => {
-    currentPosition -= 1
-    updateCarousel()
-  })
+  startTimer()
 
-  function updateCarousel() {
+  function startTimer(): void {
+    intervalId = setInterval(() => {
+      nextSlide()
+    }, 5000)
+  }
+
+  function resetTimer(): void {
+    if (intervalId !== null) {
+      clearInterval(intervalId)
+    }
+
+    startTimer()
+  }
+
+  function nextSlide(): void {
+    currentPosition = (currentPosition % carouselItems.length) + 1
+    updateCarousel()
+  }
+
+  function updateCarousel(): void {
     carouselItems.forEach((carouselItem) => {
       const dataHeroString: string | undefined = carouselItem.dataset.hero
       const dataHero: number = dataHeroString ? parseInt(dataHeroString) : 0
 
-      if (currentPosition <= 0) {
-        currentPosition =
-          document.getElementsByClassName('carousel-item').length
-      }
-      if (
-        currentPosition >
-        document.getElementsByClassName('carousel-item').length
-      ) {
-        currentPosition = 1
-      }
-
-      carouselItem.classList.toggle(
-        'hidden',
-        currentPosition === dataHero &&
-          carouselItem.classList.contains('hidden')
-      )
-
-      carouselItem.classList.toggle(
-        'hidden',
-        currentPosition !== dataHero &&
-          !carouselItem.classList.contains('hidden')
-      )
+      carouselItem.classList.toggle('hidden', currentPosition !== dataHero)
     })
   }
 </script>
 <style>
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #888;
+    margin: 0 5px; /* Adjust the distance between dots */
+    cursor: pointer;
+  }
+
+  .dot.active {
+    background-color: #333;
+  }
   .hero-description-slide-in {
     animation: slideIn 1s ease-out;
   }
@@ -189,10 +204,6 @@ import heroImage3 from '../images/Vietnamese-Coffee-Highlight-Drink.png'
     color: #fff;
     text-align: center;
     line-height: 100px;
-  }
-  .previous-button,
-  .next-button {
-    cursor: pointer;
   }
 
   @font-face {
