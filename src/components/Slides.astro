@@ -1,0 +1,215 @@
+---
+import { Image } from 'astro:assets'
+import heroImage1 from '../images/Untitled-design-33-e1696435034502.png'
+import heroImage2 from '../images/Untitled-design-35-e1696479882105.png'
+import heroImage3 from '../images/Vietnamese-Coffee-Highlight-Drink.png'
+---
+
+<div class="slider-container relative inline-flex h-screen overflow-hidden">
+  <div
+    class="slide relative flex h-screen w-screen md:col-span-3"
+    data-hero="0"
+  >
+    <div class="hero-background-overlay relative m-0 flex select-none p-0">
+      <div class="absolute z-10 m-0 h-full w-full bg-white p-0 opacity-25">
+      </div>
+      <Image
+        src={heroImage1}
+        alt="house coffee hero image"
+        class="hero-image scale-[1.3]"
+        format="webp"
+      />
+    </div>
+    <div
+      class="hero-text-content-subcontainer hero-description-slide-in absolute bottom-0 left-0 right-0 top-0 z-20 m-0 flex h-screen w-screen items-center justify-start text-left"
+    >
+      <div class="hero-text-content m-0 w-1/2">
+        <h1 class="w-2/3 select-none">A century of perfection</h1>
+        <div class="hero-description w-11/12 select-none">
+          Café Sua Da reigns supreme as a global sensation! Our <span
+            class="house-coffee-text-bold">House Coffee</span
+          > embodies the essence of authentic Vietnamese java. Renowned for its
+          velvety nutty notes and a taste that's truly unique, it's a sip of
+          history.
+          <a
+            class="sharp-sans-semibold mt-9 inline-block cursor-pointer rounded-full bg-[#af1e26] px-[26px] py-[14px] text-[15px] text-white"
+          >
+            Explore Our Signature Drinks
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="slide relative flex h-screen w-screen md:col-span-3"
+    data-hero="1"
+  >
+    <div class="hero-background-overlay relative m-0 flex select-none p-0">
+      <Image
+        src={heroImage2}
+        alt="matcha hero image"
+        class="hero-image"
+        format="webp"
+      />
+    </div>
+    <div
+      class="hero-text-content-subcontainer hero-description-slide-in absolute bottom-0 left-0 right-0 top-0 z-20 m-0 flex h-screen w-screen items-center justify-start text-left"
+    >
+      <div class="hero-text-content m-0 w-1/2">
+        <h1 class="select-none">Essence of Japan in Every Sip</h1>
+        <div class="hero-description select-none">
+          Discover the heart of Japanese tea culture with our exquisite Matcha
+          tea, sourced from the lush Minamikushu mountains. Handpicked with
+          precision using the traditional 'tezumi' technique, our teas are the
+          epitome of artisanal perfection. Join us in savoring the world's
+          finest high-quality Matcha, a true testament to the dedication and
+          craftsmanship of Japan's tea artisans.
+          <a
+            class="sharp-sans-semibold mt-9 inline-block cursor-pointer rounded-full bg-[#af1e26] px-[26px] py-[14px] text-[15px] text-white"
+          >
+            The Healthiest Drink Nature Has to Offer
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="slide relative flex h-screen w-screen md:col-span-3"
+    data-hero="2"
+  >
+    <div class="hero-background-overlay relative m-0 flex select-none p-0">
+      <div class="w-1/2"></div>
+      <div class="w-1/2">
+        <Image
+          src={heroImage3}
+          alt="vietnamese coffee hero image"
+          class="hero-image"
+          format="webp"
+        />
+      </div>
+    </div>
+    <div
+      class="hero-text-content-subcontainer hero-description-slide-in absolute bottom-0 left-0 right-0 top-0 z-20 m-0 flex h-screen w-screen items-center justify-start text-left"
+    >
+      <div class="hero-text-content m-0 w-1/2">
+        <h1 class="select-none">The Best Coffee, Tea, & Goodness</h1>
+        <div class="hero-description select-none">
+          Looking for the perfect cup of coffee to start your day? Or maybe
+          you're in the mood for a relaxing cup of tea? No matter what you're
+          craving, we have the perfect coffee, tea, and goodness for you.
+        </div>
+        <a
+          class="sharp-sans-semibold mt-9 cursor-pointer rounded-full bg-[#af1e26] px-[26px] py-[14px] text-[15px] text-white"
+        >
+          Explore Drinks
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .slider-container {
+    transform: translateX(0);
+    transition: transform 0.3s ease-out;
+    width: 500%;
+  }
+
+  .hero-description-slide-in {
+    animation: slideIn 1s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .style {
+    height: 100px;
+    margin: 10px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    line-height: 100px;
+  }
+
+  @font-face {
+    font-family: 'SharpSansDispNo2-Book';
+    src: url('/fonts/SharpSansDispNo2-Book.ttf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'SharpSansDispNo2-Bold';
+    src: url('/fonts/SharpSansDispNo2-Bold.ttf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'SharpSansDispNo2-Semibold';
+    src: url('/fonts/SharpSansDispNo2-Semibold.ttf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  .hero-background-overlay {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: none;
+    object-position: 30% 100%;
+  }
+
+  .hero-text-content-container {
+    max-width: 80%;
+  }
+
+  .hero-text-content-subcontainer {
+    background-position: 50%;
+    padding: 100px;
+  }
+
+  .hero-text-content {
+    max-width: 65%;
+    line-height: 1.5;
+  }
+
+  h1 {
+    font-family: 'SharpSansDispNo2-Bold', sans-serif;
+    font-size: 60px;
+    margin: 8px 0px 30px;
+    line-height: 60px;
+  }
+
+  .hero-description {
+    font-family: 'SharpSansDispNo2-Book', sans-serif;
+    font-weight: normal;
+    font-size: 17px;
+    margin: 0px 0px 30px;
+  }
+
+  .house-coffee-text-bold {
+    font-family: 'SharpSansDispNo2-Semibold', sans-serif;
+    font-size: 17px;
+  }
+
+  .sharp-sans-semibold {
+    font-family: 'SharpSansDispNo2-SemiBold', sans-serif;
+  }
+</style>
