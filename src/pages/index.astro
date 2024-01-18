@@ -1,4 +1,8 @@
 ---
+import { Image } from 'astro:assets'
+import coldCoffeeDrinksImage from '../images/cold-coffee-based-drinks-cup.png'
+import coldTeaDrinksImage from '../images/cold-tea-drink-glass-flavor.png'
+import macaronBitesImage from '../images/macarons-bites-dessert-snack.png'
 import Layout from '../layouts/Layout.astro'
 import Carousel from '../components/Carousel.astro'
 ---
@@ -10,10 +14,34 @@ import Carousel from '../components/Carousel.astro'
     <div class="relative flex h-screen md:col-span-3">
       <Carousel />
     </div>
-    <div class="h-screen bg-orange-300 md:col-span-1">coffee</div>
-    <div class="h-screen bg-orange-300 md:col-span-1">tea</div>
-    <div class="h-screen bg-orange-300 md:col-span-1">bites</div>
-    <div class="h-screen bg-green-300 md:col-span-3">our mission</div>
+    <div class="relative h-80 md:col-span-1">
+      <div class="shrink-bg m-0 h-full bg-slate-500 p-0"></div>
+      <Image
+        src={coldCoffeeDrinksImage}
+        alt="cold coffee based drinks"
+        class="pointer-events-none absolute bottom-0 right-0"
+        format="webp"
+      />
+    </div>
+    <div class="relative h-80 md:col-span-1">
+      <div class="shrink-bg m-0 h-full bg-slate-500 p-0"></div>
+      <Image
+        src={coldTeaDrinksImage}
+        alt="cold tea drinks"
+        class="pointer-events-none absolute bottom-0 right-0"
+        format="webp"
+      />
+    </div>
+    <div class="relative h-80 md:col-span-1">
+      <div class="shrink-bg m-0 h-full bg-slate-500 p-0"></div>
+      <Image
+        src={macaronBitesImage}
+        alt="macarons bites dessert snack"
+        class="pointer-events-none absolute bottom-0 right-0"
+        format="webp"
+      />
+    </div>
+    <div class="h-full bg-green-300 md:col-span-3">our mission</div>
     <div class="justify-self-center md:col-span-3">
       <!-- <Carousel /> -->
     </div>
@@ -55,6 +83,14 @@ import Carousel from '../components/Carousel.astro'
     font-weight: normal;
     font-style: normal;
     font-display: swap;
+  }
+
+  .shrink-bg {
+    transition: transform 0.25s;
+  }
+  .shrink-bg:hover {
+    cursor: pointer;
+    transform: scale(0.95);
   }
 
   .hero-background-overlay {

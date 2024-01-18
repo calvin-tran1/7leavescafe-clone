@@ -2,7 +2,7 @@
 import Slides from './Slides.astro'
 ---
 
-<div class="carousel w-screen justify-center overflow-hidden align-middle">
+<div class="carousel flex w-screen overflow-hidden align-middle">
   <Slides />
   <div class="absolute bottom-10 z-20 w-screen">
     <button class="dot active" data-carouselbutton="0"></button>
@@ -12,7 +12,7 @@ import Slides from './Slides.astro'
 </div>
 
 <script>
-  // import type { SerializedSSRManifest } from 'astro/app/types'
+  const carousel: HTMLElement | null = document.querySelector('.carousel')
   const slider: HTMLElement | null = document.querySelector('.slider-container')
   const slides: HTMLDivElement[] = Array.from(
     document.querySelectorAll('.slide')
@@ -26,7 +26,9 @@ import Slides from './Slides.astro'
     currentTranslate = 0,
     prevTranslate = 0,
     animationId = 0,
-    currentIndex = 0
+    currentIndex = 0,
+    direction = -1,
+    isTransitioning = false
 
   let intervalId: number | null = null
 
@@ -49,11 +51,27 @@ import Slides from './Slides.astro'
   dotButtons.forEach((button, dotIndex) => {
     button.addEventListener('click', () => {
       currentIndex = dotIndex
-      resetTimer()
-      updateDots()
+      // resetTimer()
+      // updateDots()
       setPositionByIndex()
     })
   })
+
+  function appendPrependSlides() {
+    if (isTransitioning === true) {
+      if (slider && direction === -1) {
+        slider.appendChild(slider.firstElementChild as Node)
+      } else if (slider && direction === 1) {
+        slider.prepend(slider.lastElementChild as Node)
+      }
+
+      slider!.style.transition = 'none'
+      slider!.style.transform = 'translateX(0)'
+      setTimeout(function () {
+        slider!.style.transition = 'transform 0.3s ease-out'
+      })
+    }
+  }
 
   function touchStart(index: number) {
     return function (event: MouseEvent | TouchEvent) {
@@ -72,24 +90,23 @@ import Slides from './Slides.astro'
     cancelAnimationFrame(animationId)
 
     const movedBy = currentTranslate - prevTranslate
+    const threshold = 100
 
-    if (movedBy < -100 && currentIndex < slides.length - 1) {
-      currentIndex += 1
-    }
-    if (movedBy > 100 && currentIndex > 0) {
-      currentIndex -= 1
-    }
-    if (movedBy < -100 && currentIndex >= slides.length) {
-      currentIndex = 0
-    }
-    if (movedBy > 100 && currentIndex < 0) {
-      currentIndex = slides.length - 1
+    if (movedBy < -threshold) {
+      currentIndex = (currentIndex + 1) % slides.length
+      direction = -1
+      carousel!.style.justifyContent = 'flex-start'
+    } else if (movedBy > threshold) {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length
+      direction = 1
+      carousel!.style.justifyContent = 'flex-end'
     }
 
     setPositionByIndex()
     updateDots()
-    resetTimer()
-    slider?.classList.remove('cursor-grabbing')
+    // resetTimer()
+    slider!.classList.remove('cursor-grabbing')
+    slider!.addEventListener('transitionend', appendPrependSlides)
   }
 
   function touchMove(event: MouseEvent | TouchEvent) {
@@ -122,22 +139,22 @@ import Slides from './Slides.astro'
     setSliderPosition()
   }
 
-  startTimer()
+  // startTimer()
 
-  function startTimer(): void {
-    intervalId = setInterval(() => {
-      nextSlide()
-      updateDots()
-    }, 5000)
-  }
+  // function startTimer(): void {
+  //   intervalId = setInterval(() => {
+  //     nextSlide()
+  //     updateDots()
+  //   }, 5000)
+  // }
 
-  function resetTimer(): void {
-    if (intervalId !== null) {
-      clearInterval(intervalId)
-    }
+  // function resetTimer(): void {
+  //   if (intervalId !== null) {
+  //     clearInterval(intervalId)
+  //   }
 
-    startTimer()
-  }
+  //   startTimer()
+  // }
 
   function nextSlide(): void {
     if (currentIndex >= slides.length - 1) {
@@ -159,6 +176,7 @@ import Slides from './Slides.astro'
 <style>
   .carousel {
     cursor: grab;
+    justify-content: flex-start;
   }
   .dot {
     width: 15px;
