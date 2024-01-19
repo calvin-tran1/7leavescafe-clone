@@ -9,35 +9,47 @@ import Carousel from '../components/Carousel.astro'
 
 <Layout title="7 Leaves Cafe - Be The Change">
   <div
-    class="m-0 grid h-screen justify-items-stretch gap-4 p-0 text-center md:grid-cols-3"
+    class="m-0 grid h-screen justify-items-stretch p-0 text-center md:grid-cols-3"
   >
     <div class="relative flex h-screen md:col-span-3">
       <Carousel />
     </div>
-    <div class="relative h-80 md:col-span-1">
-      <div class="shrink-bg m-0 h-full bg-slate-500 p-0"></div>
+    <div class="relative m-0 h-80 md:col-span-1">
+      <div class="shrink-bg m-0 h-full w-full bg-[#D9D8CD] p-5">
+        <h3 class="text-left text-white">
+          <a class="no-underline">COFFEE</a>
+        </h3>
+      </div>
       <Image
         src={coldCoffeeDrinksImage}
         alt="cold coffee based drinks"
-        class="pointer-events-none absolute bottom-0 right-0"
+        class="pointer-events-none absolute bottom-0 right-0 w-4/5"
         format="webp"
       />
     </div>
-    <div class="relative h-80 md:col-span-1">
-      <div class="shrink-bg m-0 h-full bg-slate-500 p-0"></div>
+    <div class="relative m-0 h-80 md:col-span-1">
+      <div class="shrink-bg m-0 h-full w-full bg-[#D7D4B4] p-5">
+        <h3 class="text-left text-white">
+          <a class="no-underline">TEA</a>
+        </h3>
+      </div>
       <Image
         src={coldTeaDrinksImage}
         alt="cold tea drinks"
-        class="pointer-events-none absolute bottom-0 right-0"
+        class="pointer-events-none absolute bottom-0 right-0 w-4/5"
         format="webp"
       />
     </div>
-    <div class="relative h-80 md:col-span-1">
-      <div class="shrink-bg m-0 h-full bg-slate-500 p-0"></div>
+    <div class="relative m-0 h-80 md:col-span-1">
+      <div class="shrink-bg m-0 h-full w-full bg-[#AF1E26] p-5">
+        <h3 class="text-left text-white">
+          <a class="no-underline">BITES</a>
+        </h3>
+      </div>
       <Image
         src={macaronBitesImage}
         alt="macarons bites dessert snack"
-        class="pointer-events-none absolute bottom-0 right-0"
+        class="pointer-events-none absolute bottom-0 right-0 w-4/5"
         format="webp"
       />
     </div>
@@ -126,6 +138,10 @@ import Carousel from '../components/Carousel.astro'
     line-height: 60px;
   }
 
+  h3 {
+    font-family: 'SharpSansDispNo2-Bold', sans-serif;
+    font-size: 1.75rem;
+  }
   .hero-house-coffee-description {
     font-family: 'SharpSansDispNo2-Book', sans-serif;
     font-weight: normal;
