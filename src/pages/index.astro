@@ -3,8 +3,10 @@ import { Image } from 'astro:assets'
 import coldCoffeeDrinksImage from '../images/cold-coffee-based-drinks-cup.png'
 import coldTeaDrinksImage from '../images/cold-tea-drink-glass-flavor.png'
 import macaronBitesImage from '../images/macarons-bites-dessert-snack.png'
+import ourMissionBackground from '../images/house-coffee-cafe-order-menu.jpg'
 import Layout from '../layouts/Layout.astro'
 import Carousel from '../components/Carousel.astro'
+import Carousel2 from '../components/Carousel2.astro'
 ---
 
 <Layout title="7 Leaves Cafe - Be The Change">
@@ -14,12 +16,14 @@ import Carousel from '../components/Carousel.astro'
     <div class="relative flex h-screen md:col-span-3">
       <Carousel />
     </div>
-    <div class="relative m-0 h-80 md:col-span-1">
-      <div class="shrink-bg m-0 h-full w-full bg-[#D9D8CD] p-5">
-        <h3 class="text-left text-white">
-          <a class="no-underline">COFFEE</a>
-        </h3>
+    <div class="relative m-0 h-80 cursor-pointer md:col-span-1">
+      <div
+        class="shrink-bg m-0 h-full w-full origin-left bg-[#D9D8CD] p-5 hover:scale-x-95 hover:scale-y-90"
+      >
       </div>
+      <h3 class="absolute left-10 top-10 text-left text-white">
+        <a class="no-underline">COFFEE</a>
+      </h3>
       <Image
         src={coldCoffeeDrinksImage}
         alt="cold coffee based drinks"
@@ -27,12 +31,12 @@ import Carousel from '../components/Carousel.astro'
         format="webp"
       />
     </div>
-    <div class="relative m-0 h-80 md:col-span-1">
-      <div class="shrink-bg m-0 h-full w-full bg-[#D7D4B4] p-5">
-        <h3 class="text-left text-white">
-          <a class="no-underline">TEA</a>
-        </h3>
+    <div class="relative m-0 h-80 cursor-pointer md:col-span-1">
+      <div class="shrink-bg m-0 h-full w-full bg-[#D7D4B4] p-5 hover:scale-90">
       </div>
+      <h3 class="absolute left-10 top-10 text-left text-white">
+        <a class="no-underline">TEA</a>
+      </h3>
       <Image
         src={coldTeaDrinksImage}
         alt="cold tea drinks"
@@ -40,12 +44,14 @@ import Carousel from '../components/Carousel.astro'
         format="webp"
       />
     </div>
-    <div class="relative m-0 h-80 md:col-span-1">
-      <div class="shrink-bg m-0 h-full w-full bg-[#AF1E26] p-5">
-        <h3 class="text-left text-white">
-          <a class="no-underline">BITES</a>
-        </h3>
+    <div class="relative m-0 h-80 cursor-pointer md:col-span-1">
+      <div
+        class="shrink-bg m-0 h-full w-full origin-right bg-[#AF1E26] p-5 hover:scale-x-95 hover:scale-y-90"
+      >
       </div>
+      <h3 class="absolute left-10 top-10 text-left text-white">
+        <a class="no-underline">BITES</a>
+      </h3>
       <Image
         src={macaronBitesImage}
         alt="macarons bites dessert snack"
@@ -53,9 +59,25 @@ import Carousel from '../components/Carousel.astro'
         format="webp"
       />
     </div>
-    <div class="h-full bg-green-300 md:col-span-3">our mission</div>
+    <div class="relative h-[445px] overflow-hidden md:col-span-3">
+      <Image
+        src={ourMissionBackground}
+        alt="house coffee cafe order menu background"
+        class="pointer-events-none w-full"
+        format="webp"
+      />
+      <div
+        class="absolute left-1/2 top-1/2 w-2/5 -translate-x-1/2 -translate-y-1/2"
+      >
+        <h5 class="py-5 text-[26px] text-[#af1e26]">OUR MISSION</h5>
+        <h6 class="text-[29px]">
+          "To enrich the human experience by serving the very best coffee, tea
+          and goodness in every cup, every community."
+        </h6>
+      </div>
+    </div>
     <div class="justify-self-center md:col-span-3">
-      <!-- <Carousel /> -->
+      <Carousel2 />
     </div>
     <div class="jusitfy-self-center grid-cols-2 md:col-span-3 md:grid">
       <div class="bg-blue-100 p-4 md:col-span-1">mobile image</div>
@@ -100,10 +122,10 @@ import Carousel from '../components/Carousel.astro'
   .shrink-bg {
     transition: transform 0.25s;
   }
-  .shrink-bg:hover {
+  /* .shrink-bg:hover {
     cursor: pointer;
-    transform: scale(0.95);
-  }
+    transform: scale(0.95, 0.9);
+  } */
 
   .hero-background-overlay {
     width: 100%;
@@ -141,6 +163,11 @@ import Carousel from '../components/Carousel.astro'
   h3 {
     font-family: 'SharpSansDispNo2-Bold', sans-serif;
     font-size: 1.75rem;
+  }
+
+  h5 {
+    font-family: 'SharpSansDispNo2-Bold', sans-serif;
+    font-size: 1.3rem;
   }
   .hero-house-coffee-description {
     font-family: 'SharpSansDispNo2-Book', sans-serif;

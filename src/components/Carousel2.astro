@@ -1,0 +1,169 @@
+---
+import Slides2 from './Slides2.astro'
+const props = Astro.props
+---
+
+<div class="carousel relative flex w-screen overflow-hidden align-middle">
+  <button
+    type="button"
+    class="prev-btn absolute inset-y-1/2 start-0 z-10 h-max cursor-pointer bg-white"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <path
+        fill="currentColor"
+        fill-opacity="0.1"
+        d="m14 18l-6-6l6-6l1.4 1.4l-4.6 4.6l4.6 4.6z"></path>
+    </svg>
+  </button>
+  <Slides2 />
+  <button
+    type="button"
+    class="next-btn absolute inset-y-1/2 end-0 z-10 h-max cursor-pointer bg-white"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <path
+        fill="currentColor"
+        fill-opacity="0.1"
+        d="M12.6 12L8 7.4L9.4 6l6 6l-6 6L8 16.6z"></path>
+    </svg>
+  </button>
+</div>
+
+<script>
+  const carousel: HTMLElement | null = document.querySelector('.carousel')
+  const slider: HTMLElement | null = document.querySelector('.slider-container')
+  const slides: HTMLDivElement[] = Array.from(
+    document.querySelectorAll('.slide')
+  )
+  const prevBtn: HTMLElement | null = document.querySelector('.prev-btn')
+  const nextBtn: HTMLElement | null = document.querySelector('.next-btn')
+
+  let isDragging = false,
+    startPos = 0,
+    currentTranslate = 0,
+    prevTranslate = 0,
+    animationId = 0,
+    currentIndex = 0,
+    direction = -1,
+    isTransitioning = false
+
+  slides.forEach((slide, index) => {
+    const slideImage: HTMLElement | null = slide.querySelector('.slide-image')
+
+    if (slideImage) {
+      slideImage.addEventListener('dragstart', (e) => e.preventDefault())
+    }
+
+    slide.addEventListener('touchstart', touchStart(index))
+    slide.addEventListener('touchend', touchEnd)
+    slide.addEventListener('touchmove', touchMove)
+    slide.addEventListener('mousedown', touchStart(index))
+    slide.addEventListener('mouseup', touchEnd)
+    slide.addEventListener('mouseleave', touchEnd)
+    slide.addEventListener('mousemove', touchMove)
+    nextBtn?.addEventListener('click', nextSlide)
+  })
+
+  function appendPrependSlides() {
+    if (isTransitioning === true) {
+      if (slider && direction === -1) {
+        slider.appendChild(slider.firstElementChild as Node)
+      } else if (slider && direction === 1) {
+        slider.prepend(slider.lastElementChild as Node)
+      }
+
+      slider!.style.transition = 'none'
+      slider!.style.transform = 'translateX(0)'
+      setTimeout(function () {
+        slider!.style.transition = 'transform 0.3s ease-out'
+      })
+    }
+  }
+
+  function touchStart(index: number) {
+    return function (event: MouseEvent | TouchEvent) {
+      currentIndex = index
+      startPos = getPositionX(event)
+      isDragging = true
+      animationId = requestAnimationFrame(animation)
+    }
+  }
+
+  function touchEnd() {
+    isDragging = false
+    cancelAnimationFrame(animationId)
+
+    const movedBy = currentTranslate - prevTranslate
+    const threshold = 100
+
+    if (movedBy < -threshold) {
+      currentIndex = (currentIndex + 1) % slides.length
+      direction = -1
+      carousel!.style.justifyContent = 'flex-start'
+    } else if (movedBy > threshold) {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length
+      direction = 1
+      carousel!.style.justifyContent = 'flex-end'
+    }
+
+    setPositionByIndex()
+    slider!.addEventListener('transitionend', appendPrependSlides)
+  }
+
+  function touchMove(event: MouseEvent | TouchEvent) {
+    if (isDragging) {
+      const currentIndex = getPositionX(event)
+      currentTranslate = prevTranslate + currentIndex - startPos
+    }
+  }
+
+  function getPositionX(event: MouseEvent | TouchEvent): number {
+    return event.type.includes('mouse')
+      ? (event as MouseEvent).clientX
+      : (event as TouchEvent).touches[0].clientX
+  }
+
+  function animation() {
+    setSliderPosition()
+    if (isDragging) requestAnimationFrame(animation)
+  }
+
+  function setSliderPosition(): void {
+    if (slider) {
+      slider.style.transform = `translateX(${currentTranslate}px)`
+    }
+  }
+
+  function setPositionByIndex() {
+    currentTranslate = currentIndex * -window.innerWidth
+    prevTranslate = currentTranslate
+    setSliderPosition()
+  }
+
+  function nextSlide(): void {
+    if (currentIndex >= slides.length - 1) {
+      currentIndex = 0
+    } else {
+      currentIndex += 1
+    }
+
+    setPositionByIndex()
+  }
+</script>
+<style>
+  .carousel {
+    justify-content: flex-start;
+  }
+</style>

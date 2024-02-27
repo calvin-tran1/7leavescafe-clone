@@ -1,0 +1,152 @@
+---
+import { Image } from 'astro:assets'
+import houseCoffeeImage from '../images/house-coffee.jpg'
+import seaCreamTeaJasmine from '../images/sea-cream-tea-jasmine.jpg'
+import thaiTea from '../images/thai-tea.jpg'
+import vietnameseCoffee from '../images/vietnamese-coffee.jpg'
+import mungBeanMilkTea from '../images/mung-bean-milk-tea.jpg'
+---
+
+<div class="slider-container relative flex h-[39rem] border-t-4 border-black">
+  <div class="slide relative flex w-1/3 md:col-span-1" data-slide="0">
+    <Image
+      src={houseCoffeeImage}
+      alt="house coffee"
+      class="object-cover"
+      format="webp"
+    />
+  </div>
+  <div class="slide relative flex w-1/3 md:col-span-1" data-slide="1">
+    <Image
+      src={seaCreamTeaJasmine}
+      alt="sea cream tea jasmine"
+      class="object-cover"
+      format="webp"
+    />
+  </div>
+  <div class="slide relative flex w-1/3 md:col-span-1" data-slide="2">
+    <Image src={thaiTea} alt="thai tea" class="object-cover" format="webp" />
+  </div>
+  <div class="slide relative flex hidden w-1/3 md:col-span-1" data-slide="3">
+    <Image
+      src={vietnameseCoffee}
+      alt="vietnamese coffee"
+      class="object-cover"
+      format="webp"
+    />
+  </div>
+  <div class="slide relative flex hidden w-1/3 md:col-span-1" data-slide="4">
+    <Image
+      src={mungBeanMilkTea}
+      alt="mung bean milk tea"
+      class="object-cover"
+      format="webp"
+    />
+  </div>
+</div>
+
+<style>
+  .slider-container {
+    transform: translateX(0);
+    transition: transform 0.3s ease-out;
+    width: 300%;
+  }
+
+  .slide-description-slide-in {
+    animation: slideIn 1s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .style {
+    height: 100px;
+    margin: 10px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    line-height: 100px;
+  }
+
+  @font-face {
+    font-family: 'SharpSansDispNo2-Book';
+    src: url('/fonts/SharpSansDispNo2-Book.ttf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'SharpSansDispNo2-Bold';
+    src: url('/fonts/SharpSansDispNo2-Bold.ttf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'SharpSansDispNo2-Semibold';
+    src: url('/fonts/SharpSansDispNo2-Semibold.ttf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  .slide-background-overlay {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .slide-image {
+    width: 100%;
+    height: 100%;
+    object-fit: none;
+    object-position: 30% 100%;
+  }
+
+  .slide-text-content-container {
+    max-width: 80%;
+  }
+
+  .slide-text-content-subcontainer {
+    background-position: 50%;
+    padding: 100px;
+  }
+
+  .slide-text-content {
+    max-width: 65%;
+    line-height: 1.5;
+  }
+
+  h1 {
+    font-family: 'SharpSansDispNo2-Bold', sans-serif;
+    font-size: 60px;
+    margin: 8px 0px 30px;
+    line-height: 60px;
+  }
+
+  .slide-description {
+    font-family: 'SharpSansDispNo2-Book', sans-serif;
+    font-weight: normal;
+    font-size: 17px;
+    margin: 0px 0px 30px;
+  }
+
+  .house-coffee-text-bold {
+    font-family: 'SharpSansDispNo2-Semibold', sans-serif;
+    font-size: 17px;
+  }
+
+  .sharp-sans-semibold {
+    font-family: 'SharpSansDispNo2-SemiBold', sans-serif;
+  }
+</style>
