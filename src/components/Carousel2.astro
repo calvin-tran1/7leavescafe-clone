@@ -3,7 +3,7 @@ import Slides2 from './Slides2.astro'
 const props = Astro.props
 ---
 
-<div class="carousel relative flex w-screen overflow-hidden align-middle">
+<div class="carousel2 relative flex w-screen overflow-hidden align-middle">
   <button
     type="button"
     class="prev-btn absolute inset-y-1/2 start-0 z-10 h-max cursor-pointer bg-white"
@@ -42,128 +42,137 @@ const props = Astro.props
 </div>
 
 <script>
-  const carousel: HTMLElement | null = document.querySelector('.carousel')
-  const slider: HTMLElement | null = document.querySelector('.slider-container')
+  const carousel: HTMLElement | null = document.querySelector('.carousel2')
+  const slider: HTMLElement | null =
+    document.querySelector('.slider-container2')
   const slides: HTMLDivElement[] = Array.from(
-    document.querySelectorAll('.slide')
+    document.querySelectorAll('.slide2')
   )
   const prevBtn: HTMLElement | null = document.querySelector('.prev-btn')
   const nextBtn: HTMLElement | null = document.querySelector('.next-btn')
 
-  let isDragging = false,
-    startPos = 0,
-    currentTranslate = 0,
-    prevTranslate = 0,
-    animationId = 0,
-    currentIndex = 0,
-    direction = -1,
-    isTransitioning = false
+  let isDragging = false
+  let startPos = 0
+  let currentTranslate = 0
+  let currentIndex = 0
 
-  slides.forEach((slide, index) => {
-    const slideImage: HTMLElement | null = slide.querySelector('.slide-image')
+  nextBtn?.addEventListener('click', () => moveCarousel(1))
+  prevBtn?.addEventListener('click', () => moveCarousel(-1))
 
-    if (slideImage) {
-      slideImage.addEventListener('dragstart', (e) => e.preventDefault())
-    }
+  carousel?.addEventListener('mousedown', mouseDown)
+  carousel?.addEventListener('mousemove', mouseMove)
+  carousel?.addEventListener('mouseup', mouseUp)
 
-    slide.addEventListener('touchstart', touchStart(index))
-    slide.addEventListener('touchend', touchEnd)
-    slide.addEventListener('touchmove', touchMove)
-    slide.addEventListener('mousedown', touchStart(index))
-    slide.addEventListener('mouseup', touchEnd)
-    slide.addEventListener('mouseleave', touchEnd)
-    slide.addEventListener('mousemove', touchMove)
-    nextBtn?.addEventListener('click', nextSlide)
-  })
+  carousel?.addEventListener('touchstart', touchStart)
+  carousel?.addEventListener('touchmove', touchMove)
+  carousel?.addEventListener('touchend', touchEnd)
 
-  function appendPrependSlides() {
-    if (isTransitioning === true) {
-      if (slider && direction === -1) {
-        slider.appendChild(slider.firstElementChild as Node)
-      } else if (slider && direction === 1) {
-        slider.prepend(slider.lastElementChild as Node)
+  function mouseDown(event: MouseEvent) {
+    isDragging = true
+    startPos = event.clientX
+  }
+
+  function mouseMove(event: MouseEvent) {
+    if (!isDragging) return
+
+    const currentPosition = event.clientX
+    const diff = currentPosition - startPos
+
+    const slideWidth = getSlideWidth()
+    const distanceMoved = diff / slideWidth
+
+    currentTranslate = currentIndex * -slideWidth + distanceMoved * slideWidth
+
+    setSliderPosition()
+  }
+
+  function mouseUp() {
+    if (isDragging) {
+      isDragging = false
+
+      const slideWidth = getSlideWidth()
+      const threshold = slideWidth / 2
+
+      if (Math.abs(currentTranslate % slideWidth) >= threshold) {
+        currentIndex += currentTranslate < 0 ? 1 : -1
       }
 
-      slider!.style.transition = 'none'
-      slider!.style.transform = 'translateX(0)'
-      setTimeout(function () {
-        slider!.style.transition = 'transform 0.3s ease-out'
-      })
+      currentTranslate = -currentIndex * slideWidth
+
+      setSliderPosition()
     }
   }
 
-  function touchStart(index: number) {
-    return function (event: MouseEvent | TouchEvent) {
-      currentIndex = index
-      startPos = getPositionX(event)
-      isDragging = true
-      animationId = requestAnimationFrame(animation)
-    }
+  function touchStart(event: TouchEvent) {
+    isDragging = true
+    startPos = event.touches[0].clientX
+  }
+
+  function touchMove(event: TouchEvent) {
+    if (!isDragging) return
+
+    const currentPosition = event.touches[0].clientX
+    const diff = currentPosition - startPos
+
+    const slideWidth = getSlideWidth()
+    const distanceMoved = diff / slideWidth
+
+    currentTranslate = currentIndex * -slideWidth + distanceMoved * slideWidth
+
+    setSliderPosition()
+    event.preventDefault()
   }
 
   function touchEnd() {
+    if (!isDragging) return
+
     isDragging = false
-    cancelAnimationFrame(animationId)
 
-    const movedBy = currentTranslate - prevTranslate
-    const threshold = 100
+    const slideWidth = getSlideWidth()
+    const threshold = slideWidth / 2
 
-    if (movedBy < -threshold) {
-      currentIndex = (currentIndex + 1) % slides.length
-      direction = -1
-      carousel!.style.justifyContent = 'flex-start'
-    } else if (movedBy > threshold) {
-      currentIndex = (currentIndex - 1 + slides.length) % slides.length
-      direction = 1
-      carousel!.style.justifyContent = 'flex-end'
+    if (Math.abs(currentTranslate % slideWidth) >= threshold) {
+      currentIndex += currentTranslate < 0 ? 1 : -1
     }
 
-    setPositionByIndex()
-    slider!.addEventListener('transitionend', appendPrependSlides)
-  }
+    currentTranslate = -currentIndex * slideWidth
 
-  function touchMove(event: MouseEvent | TouchEvent) {
-    if (isDragging) {
-      const currentIndex = getPositionX(event)
-      currentTranslate = prevTranslate + currentIndex - startPos
-    }
-  }
-
-  function getPositionX(event: MouseEvent | TouchEvent): number {
-    return event.type.includes('mouse')
-      ? (event as MouseEvent).clientX
-      : (event as TouchEvent).touches[0].clientX
-  }
-
-  function animation() {
     setSliderPosition()
-    if (isDragging) requestAnimationFrame(animation)
   }
 
   function setSliderPosition(): void {
     if (slider) {
       slider.style.transform = `translateX(${currentTranslate}px)`
+
+      const maxTranslate = -(slides.length - 3) * getSlideWidth()
+      const isLastSlideVisible = currentTranslate === maxTranslate
+
+      if (nextBtn) {
+        ;(nextBtn as HTMLButtonElement).disabled = isLastSlideVisible
+      }
     }
   }
 
-  function setPositionByIndex() {
-    currentTranslate = currentIndex * -window.innerWidth
-    prevTranslate = currentTranslate
+  function moveCarousel(direction: number) {
+    const newIndex = currentIndex + direction
+
+    if (newIndex >= 0 && newIndex < slides.length) {
+      currentIndex = newIndex
+    } else {
+      currentIndex = direction > 0 ? slides.length - 1 : 0
+    }
+
+    currentTranslate = -currentIndex * getSlideWidth()
+
     setSliderPosition()
   }
 
-  function nextSlide(): void {
-    if (currentIndex >= slides.length - 1) {
-      currentIndex = 0
-    } else {
-      currentIndex += 1
-    }
-
-    setPositionByIndex()
+  function getSlideWidth(): number {
+    return slides[0].getBoundingClientRect().width
   }
 </script>
 <style>
-  .carousel {
+  .carousel2 {
     justify-content: flex-start;
   }
 </style>

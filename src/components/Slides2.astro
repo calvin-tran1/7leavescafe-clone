@@ -7,8 +7,13 @@ import vietnameseCoffee from '../images/Vietnamese-Coffee.jpg'
 import mungBeanMilkTea from '../images/Mung-Bean-Milk-Tea.jpg'
 ---
 
-<div class="slider-container relative flex h-[39rem] border-t-4 border-black">
-  <div class="slide relative flex w-1/3 md:col-span-1" data-slide="0">
+<div
+  class="slider-container2 relative flex h-[39rem] w-full shrink-0 border-t-4 border-black"
+>
+  <div
+    class="slide2 relative flex w-1/3 shrink-0 basis-[11.1111111%] md:col-span-1"
+    data-slide="0"
+  >
     <Image
       src={houseCoffee}
       alt="house coffee"
@@ -16,7 +21,10 @@ import mungBeanMilkTea from '../images/Mung-Bean-Milk-Tea.jpg'
       format="webp"
     />
   </div>
-  <div class="slide relative flex w-1/3 md:col-span-1" data-slide="1">
+  <div
+    class="slide2 relative flex w-1/3 shrink-0 basis-[11.1111111%] md:col-span-1"
+    data-slide="1"
+  >
     <Image
       src={seaCreamTeaJasmine}
       alt="sea cream tea jasmine"
@@ -24,10 +32,16 @@ import mungBeanMilkTea from '../images/Mung-Bean-Milk-Tea.jpg'
       format="webp"
     />
   </div>
-  <div class="slide relative flex w-1/3 md:col-span-1" data-slide="2">
+  <div
+    class="slide2 relative flex w-1/3 shrink-0 basis-[11.1111111%] md:col-span-1"
+    data-slide="2"
+  >
     <Image src={thaiTea} alt="thai tea" class="object-cover" format="webp" />
   </div>
-  <div class="slide relative flex hidden w-1/3 md:col-span-1" data-slide="3">
+  <div
+    class="slide2 relative flex w-1/3 shrink-0 basis-[11.1111111%] md:col-span-1"
+    data-slide="3"
+  >
     <Image
       src={vietnameseCoffee}
       alt="vietnamese coffee"
@@ -35,7 +49,10 @@ import mungBeanMilkTea from '../images/Mung-Bean-Milk-Tea.jpg'
       format="webp"
     />
   </div>
-  <div class="slide relative flex hidden w-1/3 md:col-span-1" data-slide="4">
+  <div
+    class="slide2 relative flex w-1/3 shrink-0 basis-[11.1111111%] md:col-span-1"
+    data-slide="4"
+  >
     <Image
       src={mungBeanMilkTea}
       alt="mung bean milk tea"
@@ -46,7 +63,7 @@ import mungBeanMilkTea from '../images/Mung-Bean-Milk-Tea.jpg'
 </div>
 
 <style>
-  .slider-container {
+  .slider-container2 {
     transform: translateX(0);
     transition: transform 0.3s ease-out;
     width: 300%;
